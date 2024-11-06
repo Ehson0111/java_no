@@ -34,7 +34,7 @@ pygame.mixer.set_endevent(pygame.constants.USEREVENT)
 count_windows=0
 def set_wallpaper(image_path):
     SPI_SETDESKWALLPAPER=20
-    ctypes.windll.user32.SystemParameteresInfow(SPI_SETDESKWALLPAPER)
+    ctypes.windll.user32.SystemParametersInfow(SPI_SETDESKWALLPAPER)
 
 def create_window():
     global count_windows
@@ -74,7 +74,7 @@ def set_wallpaper_from_folder(folder_path):
         messagebox.showwarning("Ошибка","папке нет иображний!")
 
 walpaper_folder='files/images/'
-if os.path.isdit(walpaper_folder):
+if os.path.isdir(walpaper_folder):
     set_wallpaper_from_folder(walpaper_folder)
 else:
     messagebox.showwarning("Ошибка","указанный путь не яявляется действительним ")
